@@ -11,7 +11,7 @@ const ScrollableChat = ({message}) => {
   return (
     <ScrollableFeed>
         {message && 
-            message.map((m,i)=>( // 2 logic same sender and if last message
+            message.map((m,i)=>( 
                 <div style={{display:"flex"}} key={m._id}>
                     {(isSameSender(message,m,i,user._id) || isLastMessage(message,i,user._id)) 
                     && (

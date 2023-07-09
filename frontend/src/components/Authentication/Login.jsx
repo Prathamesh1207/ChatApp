@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 
 const Login = () => {
-    // const [name,setName]=useState();   //to store name
+    
     const [email,setEmail]=useState();
     const [password,setPassword]=useState();
     const [show,setShow]=useState(false);
@@ -13,7 +13,7 @@ const Login = () => {
     const toast = useToast();
     const history = useHistory();
 
-    const handleClick=() => setShow(!show);  // handleclick , invert the value
+    const handleClick=() => setShow(!show);  
 
 
     const submitHandler=async()=>{
@@ -35,7 +35,6 @@ const Login = () => {
             const config={
                 headers:{
                     "content-type": "application/json",
-                    // 'Authorization': 'Bearer '+token
                 },
             };
             const { data }= await axios.post("/api/user/login",{email,password},config);
@@ -72,7 +71,6 @@ const Login = () => {
             <FormLabel>Email</FormLabel>
             <Input 
                 placeholder='Enter your Email'
-                // value={email}
                 onChange={(e)=>setEmail(e.target.value)}
             />
         </FormControl>
@@ -83,7 +81,6 @@ const Login = () => {
              <Input 
                 type={show ? "text" : "password"}
                 placeholder='Enter your Password'
-                // value={password}
                 onChange={(e)=>setPassword(e.target.value)}
              />
              <InputRightElement width="4.5rem">
@@ -103,7 +100,7 @@ const Login = () => {
             isLoading={loading}
         >Login</Button>
 
-        <Button
+        {/* <Button
             varient="solid"
             colorScheme='red'
             width="100%"
@@ -111,7 +108,7 @@ const Login = () => {
                 setEmail("guest@example.com");
                 setPassword("123456");
             }}
-        >Get Guest User Credentials</Button>
+        >Get Guest User Credentials</Button> */}
 
     </VStack>
   )

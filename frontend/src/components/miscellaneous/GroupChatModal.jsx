@@ -32,7 +32,6 @@ const GroupChatModal = ({children}) => {
                 },
             };
             const {data}= await axios.get(`/api/user?search=${search}`,config);
-            // console.log(data);
             setLoding(false);
             seteSearchResult(data);
         } catch (error) {   
@@ -63,7 +62,6 @@ const GroupChatModal = ({children}) => {
         try {
             const config={
                  headers:{
-                    // "Content-type":"application/json",
                     Authorization: `Bearer ${user.token}`,
                 },
             };

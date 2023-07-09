@@ -12,7 +12,7 @@ const app=express();
 dotenv.config();
 connectDB();
 
-app.use(express.json()); //tell server to accept the json data
+app.use(express.json()); 
 
 app.get("/",(req,res)=>{
     res.send("hello");
@@ -24,26 +24,14 @@ app.use('/api/message',messageRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-// app.get("/api/chat",(req,res)=>{
-//     res.send(chats);
-// });
-
-// app.get("/api/chat/:id",(req,res)=>{
-//     const singleChat= chats.find((c)=>c._id=req.params.id);
-//     res.send(singleChat);
-// })
 
 const PORT=process.env.PORT || 5000
 
 
-// app.listen(PORT,console.log(`Server started on PORT ${PORT}`));
-
-
-//socket io implementation for server side
 const server = app.listen(PORT,console.log(`Server started on PORT ${PORT}`));
 
 const io=require("socket.io")(server,{
-    pingTimeout:60000, //remain active till 60s
+    pingTimeout:60000, 
     cors:{
         origin:"http://localhost:3000",
     },
@@ -54,7 +42,6 @@ io.on("connection",(socket)=>{
 
     socket.on("setup",(userData)=>{
         socket.join(userData._id);
-        // console.log(userData._id);
         socket.emit("connected");
     });
 
@@ -63,7 +50,6 @@ io.on("connection",(socket)=>{
         console.log("user joined room: " + room);
     });
 
-    //for typing indicator
     socket.on("typing",(room)=>socket.in(room).emit("typing"));
     socket.on("stop typing",(room)=>socket.in(room).emit("stop typing"));
 

@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react';
-// // import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useHistory,withRouter} from 'react-router-dom'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
 
 const ChatContext=createContext()
 
@@ -12,15 +12,13 @@ const ChatProvider =({children})=>{
 
     const history=useHistory();
 
-    //as we are store the login ad signup data to local storage so fetch local storage
     useEffect(()=>{
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
         setUser(userInfo);
-        //remove
         if(!userInfo){
-            history.push('/');
-            
-        }//remove
+
+            // history.push('/');
+        }
 
     },[history]);
     

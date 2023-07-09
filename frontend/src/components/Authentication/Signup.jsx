@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 
 const Signup = () => {
-    const [name,setName]=useState();   //to store name
+    const [name,setName]=useState();   
     const [email,setEmail]=useState();
     const [password,setPassword]=useState();
     const [confirmpassword,setConfirmpassword]=useState();
@@ -17,11 +17,11 @@ const Signup = () => {
     const history = useHistory();
     
 
-    const handleClick=() => setShow(!show);  // handleclick , invert the value
+    const handleClick=() => setShow(!show);  
 
     const postDetails=(pics)=>{
-        setLoading(true);  // set loading to true upload start
-        if(pics===undefined){ //popup an error
+        setLoading(true);  
+        if(pics===undefined){ 
           toast({
           title: 'Please select an image',
           status: 'warning',
@@ -29,10 +29,9 @@ const Signup = () => {
           isClosable: true,
           position:"bottom",
           });
-          return;// reeturn if pic is undefined
+          return;
         }
 
-        //check if file upload is image or not
         if(pics.type==="image/jpeg" || pics.type==="image/png"){
             const data= new FormData();
             data.append("file",pics);
@@ -65,7 +64,7 @@ const Signup = () => {
 
     }
     
-    const submitHandler = async () => { ///to add image in mongodb
+    const submitHandler = async () => { 
         setLoading(true);
         if(!name || !email || !password || !confirmpassword ){
             toast({

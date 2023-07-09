@@ -51,7 +51,6 @@ const SingleChat = ({fetchAgain , setFetchAgain}) => {
 
           const {data}=await axios.get(`/api/message/${selectedChat._id}`,config);
 
-        //   console.log(message);
 
           setMessage(data);
           setLoading(false);
@@ -68,7 +67,6 @@ const SingleChat = ({fetchAgain , setFetchAgain}) => {
               position: "bottom",
           });
         }
-        //to display chat use useeffect to fetch
     }
 
     useEffect(()=>{
@@ -87,11 +85,10 @@ const SingleChat = ({fetchAgain , setFetchAgain}) => {
         selectedChatCompare=selectedChat;
     },[selectedChat]);
 
-    // console.log(notification);
+    
     useEffect(()=>{
         socket.on("message received",(newMessageReceived)=>{
             if(!selectedChatCompare || selectedChatCompare._id !==newMessageReceived.chat._id){
-                //give notification
                 if(!notification.includes(newMessageReceived)){
                     setNotification([newMessageReceived,...notification]);
                     setFetchAgain(!fetchAgain);
@@ -105,7 +102,7 @@ const SingleChat = ({fetchAgain , setFetchAgain}) => {
 
     const sendMessage=async(event)=>{
         if(event.key === "Enter" && newMessage){
-            socket.emit("stop typing",selectedChat._id); //after sending message stop typing
+            socket.emit("stop typing",selectedChat._id); 
             try {
                 const config={
                     headers:{
@@ -118,7 +115,7 @@ const SingleChat = ({fetchAgain , setFetchAgain}) => {
                     content:newMessage,
                     chatId:selectedChat._id,
                 },config)   
-                // console.log(data);
+                
 
                 socket.emit("new message",data);
 
@@ -141,7 +138,6 @@ const SingleChat = ({fetchAgain , setFetchAgain}) => {
     const typingHandler=(e)=>{
         setNewMessage(e.target.value);
 
-        //typing indicatoe logic
         if(!socketConnected) return;
 
         if(!typing){
@@ -211,7 +207,6 @@ const SingleChat = ({fetchAgain , setFetchAgain}) => {
                 >
                     {loading ? <Spinner size="xl" height={20} width={20} alignSelf="center" margin="auto"/>
                       :(
-                            //scrollbar width
                             <div display="flex" flexDir="column" overflowY="scroll" >
                                 <ScrollableChat message={message} />
                             </div>
@@ -219,7 +214,6 @@ const SingleChat = ({fetchAgain , setFetchAgain}) => {
                     }
                     
                     <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-                        {/* typing animation */}
                         {isTyping ? <div> <Lottie options={defaultOptions} width={70} style={{marginBottom:15, marginLeft:0}} /> </div> : <></>}
                         <Input variant="filled" bg="E0E0E0" placeholder='Enter a Message' onChange={typingHandler} value={newMessage}/>
                     </FormControl>

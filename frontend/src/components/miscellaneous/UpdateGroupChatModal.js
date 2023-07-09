@@ -1,5 +1,5 @@
 import { ViewIcon } from '@chakra-ui/icons'
-import { Box, Button, FormControl, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spinner, useRadio, useToast } from '@chakra-ui/react'
+import { Box, Button, FormControl, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spinner, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import {useDisclosure} from '@chakra-ui/hooks'
 import { ChatState } from '../../context/chatProvider'
@@ -41,10 +41,10 @@ const UpdateGroupChatModal = ({fetchAgain , setFetchAgain ,fetchMessages}) => {
                 chatId: selectedChat._id,
                 userId: user1._id,              
             },config);
-            //what if user himself is remove so we dont display group chat anymore
+            
             user1._id===user._id ? setSelectedChat() : setSelectedChat(data);
             setFetchAgain(!fetchAgain);
-            fetchMessages();//all messages get refreshed
+            fetchMessages();
             setLoading(false);     
 
         } catch (error) {
@@ -75,7 +75,7 @@ const UpdateGroupChatModal = ({fetchAgain , setFetchAgain ,fetchMessages}) => {
         return;
         }
 
-        if(selectedChat.groupAdmin._id!==user._id){  //user = logged in user && user1 is new user goning to added
+        if(selectedChat.groupAdmin._id!==user._id){  
               toast({
               title: 'Only Admin Can Add..',
               status: 'error',
@@ -195,7 +195,7 @@ const UpdateGroupChatModal = ({fetchAgain , setFetchAgain ,fetchMessages}) => {
                     <UserbadgeItem key={user._id} user={u} handleFunction={()=>handleRemove(user)} />
                 ))}
             </Box>
-            {/* form control for renaming the group */}
+            
             <FormControl display='flex'>
                 <Input placeholder='Chat Name' mb={3} value={groupChatName} onChange={(e)=>setGroupChatName(e.target.value)}/>
                 <Button variant="solid" colorScheme='teal' ml={1} isLoading={renameLoading} onClick={handleRename}>

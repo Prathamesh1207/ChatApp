@@ -73,7 +73,6 @@ const SideDrawer = () => {
             Authorization: `Bearer ${user.token}`,
           },
         };
-        //now make api request
 
         const {data}=await axios.post("/api/chat",{userId},config);
 
@@ -81,7 +80,7 @@ const SideDrawer = () => {
 
          setSelectedChat(data);
          setLoadingChat(false);
-         onClose(); //close drawer
+         onClose(); 
 
       } catch (error) {
         toast({

@@ -14,11 +14,11 @@ userSchema.methods.matchpassword = async function(enteredPassword){
     return await bcrypt.compare(enteredPassword , this.password);
 }
 
-//before saved the user encrypt the password
-userSchema.pre("save",async function(next){  //middleware
-    if(!this.isModified){ //if current password is not modified ,moveon to next means dont run code after it
+
+userSchema.pre("save",async function(next){  
+    if(!this.isModified){ 
         next()
-    }//otherwisw generate password
+    }
 
     const salt=await bcrypt.genSalt(10);
     this.password=await bcrypt.hash(this.password,salt);

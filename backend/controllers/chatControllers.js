@@ -74,13 +74,12 @@ const createGroupChat=asyncHandler(async(req,res)=>{
         return res.status(400).send({message:"Please fill all the fields"});
     }
 
-    //take usr from req.body
-    var users=JSON.parse(req.body.users); //wr are sending users arry from frontend in stringify format and parse in backend
+    var users=JSON.parse(req.body.users); 
 
     if(users.length<2){
         return res.status(400).send("More than 2 users require to form group chat")
     }
-    //now add the logged in user into chat
+    
     users.push(req.user);
 
     try {
@@ -88,7 +87,7 @@ const createGroupChat=asyncHandler(async(req,res)=>{
             chatName: req.body.name,
             users:users,
             isGroupChat: true,
-            groupAdmin: req.user, //logged in user
+            groupAdmin: req.user, 
         });
         const fullGroupChat=await Chat.findOne({_id:groupChat._id})
             .populate("users","-password")
@@ -104,13 +103,11 @@ const createGroupChat=asyncHandler(async(req,res)=>{
 });
 
 const renameGroup=asyncHandler(async(req,res)=>{
-    //taking chat id that we are goin to rename
     const{ chatId,chatName}=req.body;
 
     const updatedChat=await Chat.findByIdAndUpdate(
         chatId,
         {
-            // chatName:chatName
             chatName,
         },
         {
@@ -133,7 +130,6 @@ const addToGroup=asyncHandler(async(req,res)=>{
     const {chatId,userId}=req.body;
 
     const added=await Chat.findByIdAndUpdate(chatId,{
-        //update the user array
         $push:{ users:userId},  
     },{new:true})
     .populate("users","-password")
@@ -152,7 +148,6 @@ const removeFromGroup=asyncHandler(async(req,res)=>{
     const {chatId,userId}=req.body;
 
     const removed=await Chat.findByIdAndUpdate(chatId,{
-        //update the user array
         $pull:{ users:userId},  
     },{new:true})
     .populate("users","-password")

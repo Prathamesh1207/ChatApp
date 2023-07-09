@@ -15,7 +15,7 @@ const registerUser=asyncHandler(async(req,res)=>{
         res.status(400);
         throw new error("User already exists");
     }
-    //if user is not find then crezte one
+    
     const user=await User.create({
         name,email,password,pic
     });
@@ -26,7 +26,7 @@ const registerUser=asyncHandler(async(req,res)=>{
             name:user.name,
             email:user.email,
             pic:user.pic,
-            token:generateToken(user._id),                        //when user created , jwt token also want to send
+            token:generateToken(user._id),             
         });
     }else{
         res.status(400);
@@ -40,7 +40,7 @@ const authUser=asyncHandler(async(req,res)=>{
     const{email , password} = req.body;
 
     const user = await User.findOne({email})
-    //if user exist and passwoed matches
+    
 
     if(user && (await user.matchpassword(password))){
         res.json({
@@ -57,7 +57,7 @@ const authUser=asyncHandler(async(req,res)=>{
 
 });
 
-// /api/user?search=pratham
+
 const allUsers=asyncHandler(async(req,res)=>{
     const keyword=req.query.search?{
         $or:[
@@ -65,17 +65,10 @@ const allUsers=asyncHandler(async(req,res)=>{
             {email:{$regex: req.query.search, $options:"i"}},
         ],
     }:{};
-    //find above user in database
+    
 
-    const users= await User.find(keyword).find({_id:{$ne:req.user._id}}); //except this user find all
+    const users= await User.find(keyword).find({_id:{$ne:req.user._id}}); 
     res.send(users);
-
-
-
-
-
-
-    console.log(keyword);
 })
 
 
